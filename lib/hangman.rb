@@ -22,16 +22,17 @@ class Game
     hidden_solution = solution_arr.map {|v| v = "_ "}
   end
 
-  def check_gameover(hidden_solution, solution_arr, wrong_word_count)
+  def check_gameover(hidden_solution, solution_arr, wrong_letter_count)
     if hidden_solution == solution_arr
       @@gameover = true
-    elsif wrong_word_count == 0
+    elsif wrong_letter_count == 0
       @@gameover = true
     end
   end
 
   def play
-    wrong_word_count = @@max_fails
+    wrong_letter_count = @@max_fails
+    wrong_letter_arr = []
     round = 1
     
     solution_arr = random_word.split("") #get random word from dict
@@ -53,15 +54,17 @@ class Game
       end
 
       if hidden_solution.include?(guess) == false
-        wrong_word_count -= 1
+        wrong_letter_count -= 1
+        wrong_letter_arr.push(guess)
       end
 
-      check_gameover(hidden_solution, solution_arr, wrong_word_count)
+      check_gameover(hidden_solution, solution_arr, wrong_letter_count)
 
       puts "===================="
       puts "#{hidden_solution.join("")}"
       puts "===================="
-      puts "Incorrect words left: #{wrong_word_count}"
+      puts "Incorrect words left: #{wrong_letter_count}"
+      puts "Wrong letters: #{wrong_letter_arr}"
       
       round += 1
     end
@@ -70,7 +73,7 @@ class Game
     puts "Game Over"
     puts "---------------------"
 
-    if wrong_word_count == 0
+    if wrong_letter_count == 0
       puts "You Lose"
       puts "Secret word: #{solution_arr.join("")}"
     else
