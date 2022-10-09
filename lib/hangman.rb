@@ -80,7 +80,30 @@ class Game
       puts "You Win"
     end
   end
+
+  def menu
+    puts "===================="
+    puts " WELCOME TO HANGMAN "
+    puts "===================="
+
+    puts "Please select an option below:"
+    puts "1) New Game"
+    puts "2) Load Game"
+    puts "3) Quit"
+    option = gets.strip.to_i
+    
+    case option
+    when 1
+      play
+    when 2
+      puts "load"
+    when 3
+      exit
+    else
+      menu
+    end
+  end
 end
 
 new_game = Game.new
-new_game.play
+new_game.menu
