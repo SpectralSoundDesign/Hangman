@@ -1,6 +1,20 @@
+require 'yaml'
+
 class Game
   @@gameover = false
   @@max_fails = 10
+
+  def save_game(round, wrong_letter_count, wrong_letter_arr, solution_arr, hidden_solution)
+    save_format = { state: @@gameover,
+                    round: round,
+                    wrong_count: wrong_letter_count,
+                    wrong_arr: wrong_letter_arr,
+                    solution: solution_arr,
+                    hidden_solution: hidden_solution
+                    }
+    
+    File.open("savedgames/save.yaml", "w") { |file| file.write(save_format.to_yaml) }        
+  end
 
   def random_word
     dict = File.open("/Users/willrichards/repos/Hangman/google-10000-english-no-swears.txt", "r")
@@ -43,6 +57,13 @@ class Game
     puts "===================="
     
     while (@@gameover != true)
+      puts "Save game? Y/N"
+      save = gets.strip.downcase
+
+      if save == 'y'
+        save_game(round, wrong_letter_count, wrong_letter_arr, solution_arr, hidden_solution)
+      end
+
       puts "Round: #{round}"
       puts "Guess a letter: "
       guess = gets.strip.downcase
@@ -70,7 +91,7 @@ class Game
     end
 
     puts "---------------------"
-    puts "Game Over"
+    puts "      Game Over      "
     puts "---------------------"
 
     if wrong_letter_count == 0
