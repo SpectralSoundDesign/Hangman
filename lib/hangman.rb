@@ -25,18 +25,18 @@ class Game
   def check_gameover(hidden_solution, solution_arr, wrong_word_count)
     if hidden_solution == solution_arr
       @@gameover = true
-    elsif wrong_word_count == @@max_fails
+    elsif wrong_word_count == 0
       @@gameover = true
     end
   end
 
   def play
-    wrong_word_count = 0
+    wrong_word_count = @@max_fails
     round = 1
     
     solution_arr = random_word.split("") #get random word from dict
     hidden_solution = hide_word(solution_arr) #hide word
-    
+
     puts "===================="
     puts "#{hidden_solution.join("")}"
     puts "===================="
@@ -54,7 +54,7 @@ class Game
       end
 
       if hidden_solution.include?(guess) == false
-        wrong_word_count += 1
+        wrong_word_count -= 1
       end
 
       check_gameover(hidden_solution, solution_arr, wrong_word_count)
@@ -62,14 +62,14 @@ class Game
       puts "===================="
       puts "#{hidden_solution.join("")}"
       puts "===================="
-      puts "Incorrect words: #{wrong_word_count}"
+      puts "Incorrect words left: #{wrong_word_count}"
       
       round += 1
     end
 
     puts "Game Over"
 
-    if wrong_word_count >= @@max_fails
+    if wrong_word_count == 0
       puts "You Lose"
     else
       puts "You Win"
