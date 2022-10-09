@@ -1,0 +1,19 @@
+---
+:state: false
+:round: 5
+:wrong_count: 8
+:wrong_arr:
+- d
+- g
+:solution:
+- s
+- h
+- a
+- f
+- t
+:hidden_solution:
+- s
+- h
+- '_ '
+- '_ '
+- '_ '
