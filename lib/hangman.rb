@@ -40,12 +40,11 @@ class Game
     puts "===================="
     puts "#{hidden_solution.join("")}"
     puts "===================="
-    p solution_arr #for testing purposes only
     
     while (@@gameover != true)
       puts "Round: #{round}"
       puts "Guess a letter: "
-      guess = gets.strip
+      guess = gets.strip.downcase
 
       solution_arr.each_with_index do |v, i|
         if v == guess
@@ -67,10 +66,13 @@ class Game
       round += 1
     end
 
+    puts "---------------------"
     puts "Game Over"
+    puts "---------------------"
 
     if wrong_word_count == 0
       puts "You Lose"
+      puts "Secret word: #{solution_arr.join("")}"
     else
       puts "You Win"
     end
